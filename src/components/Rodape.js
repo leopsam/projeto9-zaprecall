@@ -1,10 +1,10 @@
 import styled from "styled-components"
+import cards from "./cards"
 
-
-export default function ZapRecall () {
+export default function ZapRecall ({respondidas}) {
     return(
         <FooterConcluidos>
-            0/4 CONCLUÍDOS
+            {respondidas.length}/{cards.length} CONCLUÍDOS
         </FooterConcluidos> 
     )
 }
