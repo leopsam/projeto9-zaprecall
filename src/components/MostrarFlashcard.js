@@ -3,38 +3,32 @@ import virar from '../assets/img/seta_virar.png'
 import VirarFlashcard from "./ViraFlashcard"
 
 export default function MotrarFlashcard (props) {
-    const {number, question, answer, respondidas, setRespondidas, viradas, setViradas, clicado, setClicado, zap, setZap, perguntas,setPerguntas} = props
+    const {number, question, flash, answer, respondidas, setRespondidas, viradas, setViradas, clicado, setClicado, zap, setZap, perguntas,setPerguntas} = props
     
     function resposta(number){
-
-        console.log('clicou')
         if(!viradas.includes(number)){
-        let arrayViradas = [...viradas, number]
-        setViradas(arrayViradas)
-        console.log(arrayViradas)
+            let arrayViradas = [...viradas, number]
+            setViradas(arrayViradas)
+            console.log(arrayViradas)
         }
     }
 
-    return(
-        
-         
+    return(  
         (!viradas.includes(number)) ?    
             <PerguntaAberta>
                     <p>{question}</p>
                     <img src={virar}  onClick={() => resposta(number)}/>
             </PerguntaAberta>
-
-       :
-
-        <VirarFlashcard 
-            number={number}
-            answer={answer} 
-            respondidas={respondidas} 
-            setRespondidas={setRespondidas}
-            zap={zap}
-            setZap={setZap}
-            setClicado={setClicado}/>
-            
+            :
+            <VirarFlashcard 
+                number={number}
+                answer={answer}
+                flash={flash} 
+                respondidas={respondidas} 
+                setRespondidas={setRespondidas}
+                zap={zap}
+                setZap={setZap}
+                setClicado={setClicado}/>
     )
 }
 

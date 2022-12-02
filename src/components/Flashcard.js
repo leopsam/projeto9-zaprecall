@@ -4,6 +4,7 @@ import cards from "./cards"
 import Logo from './Logo'
 import MotrarFlashcard from "./MostrarFlashcard"
 import Rodape from './Rodape'
+import play from '../assets/img/seta_play.png'
 
 export default function Flashcard () {
     const [perguntas, setPerguntas] =useState([])
@@ -11,6 +12,7 @@ export default function Flashcard () {
     const [clicado, setClicado] = useState(false)
     const [zap, setZap] =  useState(true)
     const [viradas, setViradas] =  useState([])
+    console.log(cards) 
     console.log(perguntas) 
     console.log(respondidas) 
 
@@ -27,6 +29,7 @@ export default function Flashcard () {
                         {perguntas.includes(card.question) ?
                         <MotrarFlashcard                             
                             question={card.question} 
+                            flash={card.flash}
                             answer={card.answer} 
                             number={card.number}
                             respondidas={respondidas} 
@@ -45,10 +48,12 @@ export default function Flashcard () {
                             number={card.number} 
                             onClick={() => recebe(card.question)}>
                             <p>Pergunta {card.number}</p>
+                            <img src={play}/>
+
                         </PerguntaFechada>}
                     </>))}
 
-            <Rodape />           
+            <Rodape respondidas={respondidas}/>           
         </ScreenContainer>
     )   
 }

@@ -1,26 +1,39 @@
 import { useState } from "react"
 import styled from "styled-components"
-import Flashcard from "./Flashcard"
+import certo from '../assets/img/icone_certo.png'
+import erro from '../assets/img/icone_erro.png'
+import quaseLa from '../assets/img/icone_quase.png'
 
 export default function VirarFlashcard (props) { 
-    const {number, answer, respondidas, setRespondidas, zap, setZap, setClicado} = props
+    const {number, answer, flash, respondidas, setRespondidas, zap, setZap, setClicado} = props
     const verde = "#2FBE34"
     const amarelo = "#FF922E"
     const vermelho = "#FF3030"
-
-   
+    const [incoreto, setIncoreto] = useState([])
+    const [quase, setQuase] = useState([])
+    //let arrayIncoreto=[]
   
-    function resposta(status){       
-
+    function resposta(status){ 
         let novoArray = [...respondidas, answer]
         setRespondidas(novoArray)
-     
-        console.log(respondidas)
         console.log(status)
-       
-    }  
 
-   
+        if(status == 'incoreto'){
+            let arrayIncoreto = [...incoreto, number]
+            setIncoreto(arrayIncoreto)
+            console.log(incoreto)
+            console.log(number)
+            console.log(arrayIncoreto.includes(number))
+        }else  if(status == 'quase'){
+            let arrayQuase = [...quase, number]
+            setQuase(arrayQuase)
+            console.log(quase)
+            console.log(number)
+            console.log(arrayQuase.includes(number))
+
+        }
+        
+    }  
 
     return( 
 
@@ -29,23 +42,15 @@ export default function VirarFlashcard (props) {
             <p>{answer}</p> 
                 <ContainerBotoes>
                     <Botoes cor={vermelho} onClick={() => resposta('incoreto')}>Não lembrei</Botoes> 
-                    <Botoes cor={amarelo} onClick={() => resposta('correto1')}>Quase não lembrei</Botoes>  
-                    <Botoes cor={verde} onClick={() => resposta('correto2')}>Zap!</Botoes>
+                    <Botoes cor={amarelo} onClick={() => resposta('quase')}>Quase não lembrei</Botoes>  
+                    <Botoes cor={verde} onClick={() => resposta('correto')}>Zap!</Botoes>
                 </ContainerBotoes>                
         </PerguntaAberta>
-
         :
-
-        <PerguntaFechada>
-            <p>respondida {number}</p>
+        <PerguntaFechada cor={incoreto.includes(number) ? vermelho : quase.includes(number) ? amarelo : verde}>           
+                <p>respondida {number}</p>
+                <img src={incoreto.includes(number) ? erro : quase.includes(number) ? quaseLa : certo}/>             
         </PerguntaFechada>
-        
-        
-         
-        
-
-                                  
-           
     )
 }
 
@@ -119,5 +124,6 @@ const PerguntaFechada = styled.div`
         font-weight: 700;
         font-size: 16px;
         line-height: 19px;
-        color: #333333;
+        color: ${props => props.cor};
+        text-decoration: line-through;
     }`
