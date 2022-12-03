@@ -1,17 +1,16 @@
 import { useState } from "react"
 import styled from "styled-components"
-import certo from '../assets/img/icone_certo.png'
-import erro from '../assets/img/icone_erro.png'
-import quaseLa from '../assets/img/icone_quase.png'
+import certo from '../assets/icone_certo.png'
+import erro from '../assets/icone_erro.png'
+import quaseLa from '../assets/icone_quase.png'
 
 export default function VirarFlashcard (props) { 
-    const {number, answer, flash, respondidas, setRespondidas, zap, setZap, setClicado} = props
+    const {number, answer, respondidas, setRespondidas} = props
     const verde = "#2FBE34"
     const amarelo = "#FF922E"
     const vermelho = "#FF3030"
     const [incoreto, setIncoreto] = useState([])
     const [quase, setQuase] = useState([])
-    //let arrayIncoreto=[]
   
     function resposta(status){ 
         let novoArray = [...respondidas, answer]
@@ -30,26 +29,25 @@ export default function VirarFlashcard (props) {
             console.log(quase)
             console.log(number)
             console.log(arrayQuase.includes(number))
-
-        }
-        
+        }        
     }  
 
     return( 
 
        (!respondidas.includes(answer)) ?
         <PerguntaAberta>
-            <p>{answer}</p> 
+            <p data-test="flashcard-text">{answer}</p> 
                 <ContainerBotoes>
-                    <Botoes cor={vermelho} onClick={() => resposta('incoreto')}>Não lembrei</Botoes> 
-                    <Botoes cor={amarelo} onClick={() => resposta('quase')}>Quase não lembrei</Botoes>  
-                    <Botoes cor={verde} onClick={() => resposta('correto')}>Zap!</Botoes>
+                    <Botoes data-test="no-btn" cor={vermelho} onClick={() => resposta('incoreto')}>Não lembrei</Botoes> 
+                    <Botoes data-test="parcial-btn"cor={amarelo} onClick={() => resposta('quase')}>Quase não lembrei</Botoes>  
+                    <Botoes data-test="zap-btn"cor={verde} onClick={() => resposta('correto')}>Zap!</Botoes>
                 </ContainerBotoes>                
         </PerguntaAberta>
         :
         <PerguntaFechada cor={incoreto.includes(number) ? vermelho : quase.includes(number) ? amarelo : verde}>           
-                <p>respondida {number}</p>
-                <img src={incoreto.includes(number) ? erro : quase.includes(number) ? quaseLa : certo}/>             
+                <p data-test="flashcard-text">Pergunta {number}</p>
+                <img src={incoreto.includes(number) ? erro : quase.includes(number) ? quaseLa : certo}                 
+                data-test={incoreto.includes(number) ? 'no-icon' : quase.includes(number) ? 'parcial-icon' : 'zap-icon'}/>             
         </PerguntaFechada>
     )
 }

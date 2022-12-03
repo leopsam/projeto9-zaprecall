@@ -3,7 +3,7 @@ import cards from "./cards"
 
 export default function ZapRecall ({respondidas}) {
     return(
-        <FooterConcluidos>
+        <FooterConcluidos data-test="footer">
             {respondidas.length}/{cards.length} CONCLUÍDOS
         </FooterConcluidos> 
     )

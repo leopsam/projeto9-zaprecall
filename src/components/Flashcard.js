@@ -4,17 +4,12 @@ import cards from "./cards"
 import Logo from './Logo'
 import MotrarFlashcard from "./MostrarFlashcard"
 import Rodape from './Rodape'
-import play from '../assets/img/seta_play.png'
+import play from '../assets/seta_play.png'
 
 export default function Flashcard () {
     const [perguntas, setPerguntas] =useState([])
     const [respondidas, setRespondidas] =useState([])
-    const [clicado, setClicado] = useState(false)
-    const [zap, setZap] =  useState(true)
     const [viradas, setViradas] =  useState([])
-    console.log(cards) 
-    console.log(perguntas) 
-    console.log(respondidas) 
 
     function recebe(question){
         let novovalor = [...perguntas, question]
@@ -29,26 +24,19 @@ export default function Flashcard () {
                         {perguntas.includes(card.question) ?
                         <MotrarFlashcard                             
                             question={card.question} 
-                            flash={card.flash}
                             answer={card.answer} 
                             number={card.number}
                             respondidas={respondidas} 
                             setRespondidas={setRespondidas}
-                            perguntas={perguntas}
-                            setPerguntas={setPerguntas}
-                            clicado={clicado}
-                            setClicado={setClicado}
-                            zap={zap}
-                            setZap={setZap}
                             viradas={viradas}
                             setViradas={setViradas}
                             /> 
                         : 
-                        <PerguntaFechada                            
-                            number={card.number} 
-                            onClick={() => recebe(card.question)}>
-                            <p>Pergunta {card.number}</p>
-                            <img src={play}/>
+                        <PerguntaFechada 
+                            data-test="flashcard"                           
+                            number={card.number}>
+                            <p data-test="flashcard-text">Pergunta {card.number}</p>
+                            <img data-test="pay-btn" onClick={() => recebe(card.question)} src={play}/>
 
                         </PerguntaFechada>}
                     </>))}
@@ -70,7 +58,6 @@ const PerguntaFechada = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
     p {
         font-family: 'Recursive';
         font-style: normal;
@@ -78,7 +65,11 @@ const PerguntaFechada = styled.div`
         font-size: 16px;
         line-height: 19px;
         color: #333333;
-    }`
+    }
+    img{
+        cursor: pointer;
+    }
+    `
 
 const ScreenContainer = styled.div`
     background-color: #FB6B6B;

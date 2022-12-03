@@ -1,9 +1,9 @@
 import styled from "styled-components"
-import virar from '../assets/img/seta_virar.png'
+import virar from '../assets/seta_virar.png'
 import VirarFlashcard from "./ViraFlashcard"
 
 export default function MotrarFlashcard (props) {
-    const {number, question, flash, answer, respondidas, setRespondidas, viradas, setViradas, clicado, setClicado, zap, setZap, perguntas,setPerguntas} = props
+    const {number, question, answer, respondidas, setRespondidas, viradas, setViradas} = props
     
     function resposta(number){
         if(!viradas.includes(number)){
@@ -16,19 +16,16 @@ export default function MotrarFlashcard (props) {
     return(  
         (!viradas.includes(number)) ?    
             <PerguntaAberta>
-                    <p>{question}</p>
-                    <img src={virar}  onClick={() => resposta(number)}/>
+                    <p data-test="flashcard-text">{question}</p>
+                    <img data-test="turn-btn"src={virar}  onClick={() => resposta(number)}/>
             </PerguntaAberta>
             :
             <VirarFlashcard 
                 number={number}
                 answer={answer}
-                flash={flash} 
                 respondidas={respondidas} 
                 setRespondidas={setRespondidas}
-                zap={zap}
-                setZap={setZap}
-                setClicado={setClicado}/>
+                />
     )
 }
 
